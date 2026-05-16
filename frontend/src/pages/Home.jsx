@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+import { Link } from 'react-router-dom'
+
 function Home() {
     const [message, setMessage] = useState('Загрузка...')
 
@@ -19,6 +21,16 @@ function Home() {
         <div style={{ padding: '20px' }}>
             <h1>Главная страница</h1>
             <p>Ответ от бэкенда: <strong>{message}</strong></p>
+            <Link to="/tasks">
+                <button style={{
+                    marginTop: '20px',
+                    padding: '10px 20px',
+                    fontSize: '16px',
+                    cursor: 'pointer'
+                }}>
+                    Перейти к списку задач
+                </button>
+            </Link>
         </div>
     )
 }
