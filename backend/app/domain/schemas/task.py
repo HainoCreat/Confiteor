@@ -16,3 +16,10 @@ class TaskBase(BaseModel):
     is_active: bool = True
     created_at: datetime = Field(default_factory=datetime.now) 
     status: TaskStatus = TaskStatus.NORMAL
+
+class TaskList(BaseModel):
+    title: str
+    status: TaskStatus
+
+    class Config:
+        from_attributes = True

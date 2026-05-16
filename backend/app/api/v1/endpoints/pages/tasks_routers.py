@@ -6,5 +6,4 @@ router = APIRouter (
     )
 
 @router.get("/")
-def task_list():
-    return {"testmessage": "Круто", "tasks": []}
+async def task_list():
