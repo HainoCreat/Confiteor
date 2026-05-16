@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field
 from enum import Enum
 from datetime import datetime
 
+from typing import List
+
 #Схемы
 
 class TaskStatus(str, Enum):
@@ -23,3 +25,7 @@ class TaskList(BaseModel):
 
     class Config:
         from_attributes = True
+
+class TasksResponse(BaseModel):
+    tasks:List[TaskList]
+    total: int

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum as SQLEn
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 from datetime import datetime
-from ...domain.schemas.task import TaskStatus
+from app.domain.schemas.task import TaskStatus
 
 #Модели задач
 
