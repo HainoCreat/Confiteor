@@ -18,5 +18,5 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return {"message": "Ответ от Реакт!"}
+    return {"message": "Ответ от Реакт, Привет ФастАпи!"}
     
