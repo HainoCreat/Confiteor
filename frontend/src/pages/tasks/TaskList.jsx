@@ -8,7 +8,7 @@ function TaskList() {
     useEffect(() => {
         axios.get('http://127.0.0.1:5000/tasks/')
             .then(response => {
-                setTasks([response.data]) // Так как возвращается объект
+                setTasks([response.data]) 
                 setLoading(false)
             })
             .catch(error => {
