@@ -20,7 +20,7 @@ async def task_list(
     page_skip: int = 0,  #Пагинация.
     page_limit: int = 100,
     db: AsyncSession = Depends(get_db)
-):
+    ):
 
     result = await db.execute( #LINQ
         select(TaskModel) #TaskMoodel - название модели из domain/models/task
@@ -31,7 +31,7 @@ async def task_list(
     tasks = result.scalars().all()
     
     task_list = [
-        schemas.TaskList(
+        TaskList(
             title=task.title,
             status=task.status
         ) for task in tasks
@@ -44,3 +44,5 @@ async def task_list(
         tasks=task_list,
         total=total
     )
+
+# @router.get("/detail")
