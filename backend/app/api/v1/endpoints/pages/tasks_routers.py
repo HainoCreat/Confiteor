@@ -7,6 +7,8 @@ from app.domain import models
 from app.domain.models.task import TaskModel
 from app.domain.schemas.task import TaskStatus, TaskList, TasksResponse
 
+from app.core.db.base import Base
+
 
 router = APIRouter (
     prefix="/tasks", 
@@ -35,10 +37,10 @@ async def task_list(
         ) for task in tasks
     ]
     
-    total_result = await db.execute(select(func.count()).select_from(models.Task))
+    total_result = await db.execute(select(func.count()).select_from(TaskModel))
     total = total_result.scalar()
     
-    return schemas.TasksResponse(
+    return TasksResponse(
         tasks=task_list,
         total=total
     )

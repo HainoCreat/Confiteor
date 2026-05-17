@@ -4,6 +4,8 @@ from datetime import datetime
 
 from typing import List
 
+from app.core.db.base import Base
+
 #Схемы
 
 class TaskStatus(str, Enum):

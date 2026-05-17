@@ -4,9 +4,9 @@ from sqlalchemy.sql import func
 from datetime import datetime
 from app.domain.schemas.task import TaskStatus
 
-#Модели задач
+from app.core.db.base import Base
 
-Base = declarative_base()
+#Модели задач
 
 class TaskModel(Base):
     __tablename__ = "tasks"

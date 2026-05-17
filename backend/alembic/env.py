@@ -8,7 +8,7 @@ from alembic import context
 # Добавляем путь до папки app, чтобы импортировать модели
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from app.core.database import Base
+from app.core.db.base import Base
 from app.domain.models.task import TaskModel
 
 # Загружаем .env
@@ -24,6 +24,8 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 target_metadata = Base.metadata
+
+from app.domain.models import task
 
 def run_migrations_offline():
     """Запуск офлайн миграци     """
