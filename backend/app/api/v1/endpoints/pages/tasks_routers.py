@@ -23,7 +23,7 @@ async def task_list(
 ):
 
     result = await db.execute( #LINQ
-        select(TaskModel)
+        select(TaskModel) #TaskMoodel - название модели из domain/models/task
         .offset(page_skip)
         .limit(page_limit)
         .order_by(TaskModel.created_at.desc())

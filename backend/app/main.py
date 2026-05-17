@@ -2,6 +2,8 @@ from app.api.v1.endpoints.pages import tasks_routers
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.admin.setup import setup_admin
+
 # from app.api.v1.endpoints.pages.tasks_routers import task_list
 
 app = FastAPI(title = "Confiteor — проект для ваших задач")
@@ -23,5 +25,8 @@ app.add_middleware(
 def home():
     return {"message": "Ответ от Реакт, Привет ФастАпи!"}
 
+# Роуты 
 app.include_router(tasks_routers.router)
+# Админка
+setup_admin(app)
     
