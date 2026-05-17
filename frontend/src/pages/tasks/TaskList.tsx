@@ -2,7 +2,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 
-type TaskStatus = 'pending' | 'in_progress' | 'done';
+type TaskStatus = "Обычная задача" | "Срочная задача" | "Экстренная задача";
 
 interface Task {
   title: string;
