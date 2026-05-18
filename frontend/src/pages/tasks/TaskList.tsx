@@ -1,10 +1,12 @@
 // src/components/TaskList.tsx
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 type TaskStatus = "Обычная задача" | "Срочная задача" | "Экстренная задача";
 
 interface Task {
+  id: number;
   title: string;
   status: TaskStatus;
 }
@@ -46,10 +48,14 @@ export default function TaskList() {
     <div>
       <h2>Список задач (всего: {total})</h2>
       <ul>
-        {tasks.map((task, idx) => (
-          <li key={idx}>
-            <strong>{task.title}</strong> — статус: {task.status}
-          </li>
+        {tasks.map((task) => (
+          <li key={task.id}>
+            <Link to = {`/tasks/${task.id}`}>
+              <strong>
+                ({task.id})-{task.title} — Статус: {task.status}
+              </strong>
+            </Link>
+        </li>
         ))}
       </ul>
     </div>
