@@ -1,7 +1,8 @@
+from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 from app.domain.models.task import TaskModel
-from app.domain.schemas.task import TaskCreate
+from app.domain.schemas.task import TaskCreate, TaskUpdate
 
 class TaskCrud():
     @staticmethod
@@ -22,5 +23,33 @@ class TaskCrud():
         await db.refresh(new_task)
 
         return new_task
+    
+    @staticmethod
+    async def task_update(
+        db: AsyncSession,
+        task_id: int, 
+        task_data: TaskUpdate
+    ) -> Optional[TaskModel]:
+        
+        result = await db.execute(
+            select(TaskModel)
+            .where(TaskModel.id == task_id)
+        )
+
+        task = result.scalar_one_or_none()
+
+        if not task:
+            return None
+        
+        update_data = task_data.model_dump(exclude_unset=True)
+
+        for field, value in update_data.items():
+            setattr(task, field, value) 
+
+        db.add(task)
+        await db.commit()
+        await db.refresh(task)
+
+        return task
 
 task_crud = TaskCrud()

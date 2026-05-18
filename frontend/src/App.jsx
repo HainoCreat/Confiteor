@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import TaskList from './pages/tasks/TaskList'
 import TaskDetail from './pages/tasks/TaskDetail'
 import TaskCreate from './pages/tasks/TaskCreate'
+import TaskEdit from './pages/tasks/TaskEdit'
 
 import Navbar from './components/Navbar'
 
@@ -17,6 +18,7 @@ function App(){
       <Route path="/" element={<Home />} />
       <Route path="/tasks" element={<TaskList />} />
       <Route path="/tasks/create" element={<TaskCreate/>} />
+      <Route path="/tasks/:id/edit" element={<TaskEdit/>} />
       <Route path="/tasks/:id" element={<TaskDetail />} />
     </Routes>
   </BrowserRouter>

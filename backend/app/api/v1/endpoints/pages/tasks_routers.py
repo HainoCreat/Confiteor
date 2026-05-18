@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import func, select
 from app.core.database import get_db
 from app.domain.models.task import TaskModel
-from app.domain.schemas.task import TaskStatus, TaskList, TasksResponse, TaskDetail, TaskCreate
+from app.domain.schemas.task import TaskStatus, TaskList, TasksResponse, TaskDetail, TaskCreate, TaskUpdate
 
 from app.core.db.base import Base
 
@@ -76,3 +76,37 @@ async def task_create(
 
     new_task = await task_crud.task_create(db, task_data)
     return new_task
+
+@router.patch("/{task_id}", response_model=TaskDetail)
+async def task_update(
+    task_id: int,
+    task_data: TaskUpdate,
+    db: AsyncSession = Depends(get_db)
+):
+    
+    update_task = await task_crud.task_update(db, task_id, task_data)
+
+    if not update_task:
+            raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Задача {task_id} не найдена!"
+        )
+    
+    return update_task
+
+@router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def task_delete(
+    task_id: int,
+    db: AsyncSession = Depends(get_db)
+):
+    result = await db.execute(
+        select(TaskModel).where(TaskModel.id == task_id)
+    )
+    task = result.scalar_one_or_none()
+    
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    
+    await db.delete(task)
+    await db.commit()
+    return None

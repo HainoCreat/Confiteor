@@ -48,3 +48,14 @@ class TaskDetail(TaskBase):
 """Схема создания задачи"""
 class TaskCreate(TaskBase):
     pass
+
+"""Схема обновления модели"""
+class TaskUpdate(BaseModel):
+    title: Optional[str] = Field(None, min_length=1)
+    description: Optional[str]= Field(None)
+    is_active: Optional[bool]= None
+    status: Optional[TaskStatus]= None
+
+    class Config:
+        extra = "forbid"
+        from_attributes = True
