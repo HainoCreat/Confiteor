@@ -1,12 +1,11 @@
 from http.client import HTTPException
-from fastapi import APIRouter, Depends
+from app.crud.task_crud import TaskCrud, task_crud
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.sql import func, select
 from app.core.database import get_db
-from app.domain import schemas
-from app.domain import models
 from app.domain.models.task import TaskModel
-from app.domain.schemas.task import TaskStatus, TaskList, TasksResponse, TaskDetail
+from app.domain.schemas.task import TaskStatus, TaskList, TasksResponse, TaskDetail, TaskCreate
 
 from app.core.db.base import Base
 
@@ -69,3 +68,11 @@ async def task_detail(
         raise HTTPException(status_code=404, detail="Task not found/Задача не найдена")
     return task 
 
+@router.post("/create", response_model=TaskDetail, status_code = status.HTTP_201_CREATED)
+async def task_create(
+    task_data: TaskCreate,
+    db: AsyncSession = Depends(get_db)
+    ):
+
+    new_task = await task_crud.task_create(db, task_data)
+    return new_task

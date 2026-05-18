@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import TaskList from './pages/tasks/TaskList'
 import TaskDetail from './pages/tasks/TaskDetail'
+import TaskCreate from './pages/tasks/TaskCreate'
 
 import Navbar from './components/Navbar'
 
@@ -15,6 +16,7 @@ function App(){
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/tasks" element={<TaskList />} />
+      <Route path="/tasks/create" element={<TaskCreate/>} />
       <Route path="/tasks/:id" element={<TaskDetail />} />
     </Routes>
   </BrowserRouter>

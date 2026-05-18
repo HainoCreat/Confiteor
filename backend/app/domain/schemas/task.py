@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from enum import Enum
 from datetime import datetime
 
-from typing import List
+from typing import List, Optional
 
 from app.core.db.base import Base
 
@@ -16,11 +16,9 @@ class TaskStatus(str, Enum):
 
 """Базовая схема задчаи, описывающая все свойства"""
 class TaskBase(BaseModel):
-    id: int
     title: str
     description: str
     is_active: bool = True
-    created_at: datetime = Field(default_factory=datetime.now) 
     status: TaskStatus = TaskStatus.NORMAL
 
 """Список задач"""
@@ -40,7 +38,13 @@ class TasksResponse(BaseModel):
 
 """Отдельная схема для детальной страницы. Она полностью дублирует TaskBase"""
 class TaskDetail(TaskBase):
-    pass
+    id: int
+    created_at: datetime
 
     class Config:
         from_attributes = True
+
+
+"""Схема создания задачи"""
+class TaskCreate(TaskBase):
+    pass

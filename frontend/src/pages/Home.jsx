@@ -31,6 +31,20 @@ function Home() {
                     Перейти к списку задач
                 </button>
             </Link>
+            <Link to="/tasks/create">
+                <button style={{
+                    marginTop: '20px',
+                    padding: '10px 20px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    backgroundColor: '#4CAF50', // зеленый фон (так надо)
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px'
+                }}>
+                    ➕ Создать новую задачу
+                </button>
+            </Link>
         </div>
     )
 }
