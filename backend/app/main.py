@@ -1,5 +1,6 @@
 from app.api.v1.endpoints.pages import tasks_routers
 from app.api.v1.endpoints.pages import info_routers
+from app.core.config import settings
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,7 +8,7 @@ from app.admin.setup import setup_admin
 
 # from app.api.v1.endpoints.pages.tasks_routers import task_list
 
-app = FastAPI(title = "Confiteor — проект для ваших задач")
+app = FastAPI(title=settings.APP_NAME, debug=settings.DEBUG)
 
 origins = [
     "http://localhost:5173",
