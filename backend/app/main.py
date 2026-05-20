@@ -1,4 +1,5 @@
 from app.api.v1.endpoints.pages import tasks_routers
+from app.api.v1.endpoints.pages import info_routers
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -27,6 +28,7 @@ def home():
 
 # Роуты 
 app.include_router(tasks_routers.router)
+app.include_router(info_routers.router)
 # Админка
 setup_admin(app)
     

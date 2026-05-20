@@ -44,6 +44,20 @@ function Home() {
                 }}>
                     ➕ Создать новую задачу
                 </button>
+                <Link to="/about">
+                <button style={{
+                    marginTop: '20px',
+                    padding: '10px 20px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    backgroundColor: '#ffd700 ',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px'
+                }}>
+                    ➕ Создать новую задачу
+                </button>
+            </Link>
             </Link>
         </div>
     )
