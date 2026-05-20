@@ -48,14 +48,13 @@ function Home() {
                 <button style={{
                     marginTop: '20px',
                     padding: '10px 20px',
-                    fontSize: '16px',
+                    fontSize: '18px',
                     cursor: 'pointer',
                     backgroundColor: '#ffd700 ',
                     color: 'white',
-                    border: 'none',
                     borderRadius: '4px'
                 }}>
-                    ➕ Создать новую задачу
+                    О нас
                 </button>
             </Link>
             </Link>

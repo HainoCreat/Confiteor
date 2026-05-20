@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { infoService } from '../../services/infoService';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function About() {
     const [info, setInfo] = useState({ title: '', message: '' })
@@ -32,6 +33,23 @@ function About() {
         <div>
             <h1>{info.title}</h1>
             <p>{info.message}</p>
+            <Link to={`/`}>
+                <button style={{
+                marginBottom: '20px',
+                padding: '8px 16px',
+                fontSize: '14px',
+                cursor: 'pointer',
+                backgroundColor: '#6c757d',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px'
+                }}>
+                ← На главную
+                </button>
+            </Link>
         </div>
     )
 }
