@@ -24,7 +24,7 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return {"message": "Ответ от Реакт, Привет ФастАпи!"}
+    return {"message": "Ошибка — Успех!"}
 
 # Роуты 
 app.include_router(tasks_routers.router)
