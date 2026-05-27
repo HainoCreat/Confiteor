@@ -45,21 +45,20 @@ export default function TaskList() {
   useEffect(() => {
     if (successMessage) {
       const timer = setTimeout(() => {
-        // Очищаем сообщение в состоянии (через navigate с replace)
         navigate(location.pathname, { replace: true, state: {} });
       }, 3000);
       return () => clearTimeout(timer);
     }
   }, [successMessage, navigate, location.pathname]);
 
-  const handleDelete = async (id: number, title: string) => {
+  const handleDelete = async (id: number, title: string, e: React.MouseEvent) => {
+    e.stopPropagation(); // Останавливаем всплытие, чтобы не открывать детали задачи
+    
     if (window.confirm(`Вы уверены, что хотите удалить задачу "${title}"?`)) {
       try {
         setDeletingId(id);
         await taskService.deleteTask(id);
-        // Обновляем список
         await fetchTasks();
-        // Показываем сообщение об успехе
         navigate(location.pathname, { 
           state: { message: `Задача "${title}" успешно удалена!` }
         });
@@ -72,6 +71,23 @@ export default function TaskList() {
     }
   };
 
+  const handleEdit = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation(); // Останавливаем всплытие
+    navigate(`/tasks/${id}/edit`);
+  };
+
+  const handleCardClick = (id: number) => {
+    navigate(`/tasks/${id}`);
+  };
+
+  const getStatusColor = (status: TaskStatus) => {
+    switch(status) {
+      case "Обычная задача": return { bg: '#28a745', color: 'white' };
+      case "Срочная задача": return { bg: '#ffc107', color: '#333' };
+      case "Экстренная задача": return { bg: '#dc3545', color: 'white' };
+      default: return { bg: '#6c757d', color: 'white' };
+    }
+  };
 
   if (loading) return (
     <div style={{ textAlign: 'center', padding: '50px' }}>
@@ -88,7 +104,7 @@ export default function TaskList() {
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }}>
       {/* Кнопка "На главную" */}
-      <Link to={`/`}>
+      <Link to="/">
         <button style={{
           marginBottom: '20px',
           padding: '8px 16px',
@@ -166,76 +182,119 @@ export default function TaskList() {
           gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
           gap: '20px'
         }}>
-          {tasks.map((task) => (
-            <div key={task.id} style={{
-              border: '1px solid #ddd',
-              borderRadius: '8px',
-              padding: '20px',
-              backgroundColor: 'white',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              transition: 'transform 0.2s'
-            }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'start',
-                marginBottom: '15px'
-              }}>
-                <h3 style={{ margin: 0, flex: 1 }}>
-                  #{task.id} - {task.title}
-                </h3>
-                <span style={{
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  color: task.status === "Обычная задача" ? 'white' : '#333'
+          {tasks.map((task) => {
+            const statusStyle = getStatusColor(task.status);
+            
+            return (
+              <div 
+                key={task.id}
+                onClick={() => handleCardClick(task.id)}
+                style={{
+                  border: '1px solid #ddd',
+                  borderRadius: '8px',
+                  padding: '20px',
+                  backgroundColor: 'white',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                  transition: 'all 0.2s ease',
+                  cursor: 'pointer',
+                  position: 'relative'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                }}
+              >
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'start',
+                  marginBottom: '15px'
                 }}>
-                  {task.status}
-                </span>
-              </div>
-              
-              {task.description && (
-                <p style={{ color: '#666', marginBottom: '20px' }}>
-                  {task.description}
-                </p>
-              )}
-              
-              <div style={{
-                display: 'flex',
-                gap: '10px',
-                justifyContent: 'flex-end'
-              }}>
-                <Link to={`/tasks/${task.id}/edit`}>
-                  <button style={{
-                    padding: '6px 12px',
-                    backgroundColor: '#007bff',
-                    color: 'white',
-                    border: 'none',
+                  <h3 style={{ margin: 0, flex: 1, color: '#333' }}>
+                    #{task.id} - {task.title}
+                  </h3>
+                  <span style={{
+                    padding: '4px 8px',
                     borderRadius: '4px',
-                    cursor: 'pointer'
+                    fontSize: '12px',
+                    fontWeight: 'bold',
+                    backgroundColor: statusStyle.bg,
+                    color: statusStyle.color,
+                    marginLeft: '10px'
                   }}>
+                    {task.status}
+                  </span>
+                </div>
+                
+                {task.description && (
+                  <p style={{ 
+                    color: '#666', 
+                    marginBottom: '20px',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical'
+                  }}>
+                    {task.description.length > 100 
+                      ? `${task.description.substring(0, 100)}...` 
+                      : task.description}
+                  </p>
+                )}
+                
+                <div style={{
+                  display: 'flex',
+                  gap: '10px',
+                  justifyContent: 'flex-end'
+                }}>
+                  <button 
+                    onClick={(e) => handleEdit(e, task.id)}
+                    style={{
+                      padding: '6px 12px',
+                      backgroundColor: '#007bff',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontSize: '14px',
+                      transition: 'background-color 0.2s'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0056b3'}
+                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#007bff'}
+                  >
                     ✏️ Редактировать
                   </button>
-                </Link>
-                <button 
-                  onClick={() => handleDelete(task.id, task.title)}
-                  disabled={deletingId === task.id}
-                  style={{
-                    padding: '6px 12px',
-                    backgroundColor: '#dc3545',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: deletingId === task.id ? 'not-allowed' : 'pointer',
-                    opacity: deletingId === task.id ? 0.6 : 1
-                  }}
-                >
-                  {deletingId === task.id ? 'Удаление...' : '🗑️ Удалить'}
-                </button>
+                  <button 
+                    onClick={(e) => handleDelete(task.id, task.title, e)}
+                    disabled={deletingId === task.id}
+                    style={{
+                      padding: '6px 12px',
+                      backgroundColor: '#dc3545',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: deletingId === task.id ? 'not-allowed' : 'pointer',
+                      opacity: deletingId === task.id ? 0.6 : 1,
+                      fontSize: '14px',
+                      transition: 'background-color 0.2s'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!deletingId) e.currentTarget.style.backgroundColor = '#c82333';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!deletingId) e.currentTarget.style.backgroundColor = '#dc3545';
+                    }}
+                  >
+                    {deletingId === task.id ? 'Удаление...' : '🗑️ Удалить'}
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

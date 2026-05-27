@@ -80,5 +80,6 @@ confiteor/
 │   ├── vite.config
 │   └── README.md #Базовая документация React
 ├── images_repository # Изображения для репозитория
+├── CONTRIBUTING.md
 └── README.md #Документация проекта
 ```
