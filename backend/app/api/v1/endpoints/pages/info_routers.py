@@ -18,5 +18,5 @@ router = APIRouter (
 def info_main():
     return{
         "title": "О нас",
-        "message": "Confiteor — проект для ваших задач!"
+        "message": "Confiteor — проект для любых ваших задач! Вы можете: Создать и отредактировать задачу, а так же установить ее срочность."
     }

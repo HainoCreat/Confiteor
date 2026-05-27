@@ -48,6 +48,7 @@ function About() {
                 gap: '5px'
                 }}>
                 ← На главную
+                <img src = "/favicon.svg"/>
                 </button>
             </Link>
         </div>
