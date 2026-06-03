@@ -347,6 +347,9 @@ function About() {
                     <Link to="/" className="back-button">
                         ← На главную
                     </Link>
+                    <Link to="https://github.com/HainoCreat/Confiteor" className="back-button">
+                        ← Репозиторий проекта Confiteor
+                    </Link>
 
                     <div className="about-footer">
                         <span>© 2025 Confiteor</span>
