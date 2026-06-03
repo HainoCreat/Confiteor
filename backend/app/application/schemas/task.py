@@ -4,7 +4,7 @@ from datetime import datetime
 
 from typing import List, Optional
 
-from app.core.db.base import Base
+from app.infrastructure.core.db.base import Base
 
 #Схемы
 

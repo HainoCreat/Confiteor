@@ -1,0 +1,1 @@
+from app.infrastructure.core.db.base import Base

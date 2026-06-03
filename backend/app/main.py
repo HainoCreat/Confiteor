@@ -1,10 +1,9 @@
-from app.api.v1.endpoints.pages import tasks_routers
-from app.api.v1.endpoints.pages import info_routers
+from app.presentation.api.v1.endpoints.pages import tasks_routers, info_routers
 # from app.core.config import settings, Settings
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.admin.setup import setup_admin
+from app.presentation.admin.setup import setup_admin
 
 # from app.api.v1.endpoints.pages.tasks_routers import task_list
 

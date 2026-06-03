@@ -2,9 +2,9 @@ from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum as SQLEn
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.sql import func
 from datetime import datetime
-from app.domain.schemas.task import TaskStatus
+from app.application.schemas.task import TaskStatus, TaskList, TasksResponse, TaskDetail, TaskCreate, TaskUpdate
 
-from app.core.db.base import Base
+from app.infrastructure.core.db.base import Base
 
 #Модели задач
 

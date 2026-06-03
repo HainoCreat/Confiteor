@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 from dotenv import load_dotenv
-from app.core.db.base import Base
+from app.infrastructure.core.db.base import Base
 
 from sqlalchemy import create_engine  # синхронный
 from sqlalchemy.orm import sessionmaker

@@ -1,8 +1,8 @@
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
-from app.domain.models.task import TaskModel
-from app.domain.schemas.task import TaskCreate, TaskUpdate
+from app.domain.entities.task import TaskModel
+from app.application.schemas.task import TaskStatus, TaskList, TasksResponse, TaskDetail, TaskCreate, TaskUpdate
 
 class TaskCrud():
     @staticmethod
