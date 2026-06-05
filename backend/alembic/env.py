@@ -8,8 +8,8 @@ from alembic import context
 # Добавляем путь до папки app, чтобы импортировать модели
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 
-from app.core.db.base import Base
-from app.domain.models.task import TaskModel
+from app.infrastructure.core.db.base import Base
+from app.domain.entities.task import TaskModel
 
 # Загружаем .env
 from dotenv import load_dotenv
@@ -25,7 +25,7 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
-from app.domain.models import task
+from app.domain.entities import task
 
 def run_migrations_offline():
     """Запуск офлайн миграци     """

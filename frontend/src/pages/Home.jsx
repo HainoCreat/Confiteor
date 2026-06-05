@@ -7,7 +7,7 @@ function Home() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:5000/')
+        axios.get(`http://${window.location.hostname}:8000`)
             .then(response => {
                 setMessage(response.data.message);
                 setIsLoading(false);
