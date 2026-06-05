@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:5000'
+const API_URL = `http://${window.location.hostname}:8000`
 
 export const taskService = {
     async getTasks(skip = 0, limit = 100) {

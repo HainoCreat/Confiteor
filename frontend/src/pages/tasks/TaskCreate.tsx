@@ -16,6 +16,9 @@ interface TaskCreate {
   status: TaskStatus;
 }
 
+// 👇 Единый базовый URL
+const API_BASE_URL = `http://${window.location.hostname}:8000`;
+
 const TaskCreate: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -78,8 +81,9 @@ const TaskCreate: React.FC = () => {
     setLoading(true);
 
     try {
+      // Динамический адрес вместо жестко прописанного
       const response = await axios.post(
-        'http://localhost:5000/tasks/create',
+        `${API_BASE_URL}/tasks/create`,
         formData,
         {
           headers: {
@@ -136,7 +140,6 @@ const TaskCreate: React.FC = () => {
 
   return (
     <div className="create-task-container">
-      {/* Инлайн-стили внутри компонента */}
       <style>{`
         .create-task-container {
           max-width: 720px;
@@ -264,7 +267,6 @@ const TaskCreate: React.FC = () => {
           gap: 0.25rem;
         }
 
-        /* Custom select styling */
         select {
           appearance: none;
           background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
@@ -274,7 +276,6 @@ const TaskCreate: React.FC = () => {
           padding-right: 2.5rem;
         }
 
-        /* Checkbox styling */
         .checkbox-wrapper {
           display: flex;
           align-items: center;
@@ -298,7 +299,6 @@ const TaskCreate: React.FC = () => {
           color: #334155;
         }
 
-        /* Priority badges preview */
         .priority-badge {
           display: inline-block;
           font-size: 0.7rem;
@@ -308,7 +308,6 @@ const TaskCreate: React.FC = () => {
           color: #475569;
         }
 
-        /* Button group */
         .button-group {
           display: flex;
           gap: 1rem;
